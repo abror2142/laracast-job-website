@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Mail\JobMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class JobController extends Controller
@@ -31,11 +33,19 @@ class JobController extends Controller
             "salary" => ['required', 'numeric', 'max_digits:12', 'min_digits:2']
         ]);
 
-        Job::create([
+        // Create Job with data
+        $job = Job::create([
             'title' => request('title'),
             'salary' => request('salary'),
             'company_id' => 1,
         ]);
+
+        // Send a Confirmation Email
+        Mail::to("abror2142@gmail.com")->send(
+            new JobMail($job)
+        );
+
+        // Redirect User to jobs page.
         return redirect('/jobs');
     }
 
@@ -44,7 +54,7 @@ class JobController extends Controller
     }
  
     public function update (Job $job) {
-        // Authorize the user
+        // Authorize the user 
 
         // Validate Input
         request()->validate([

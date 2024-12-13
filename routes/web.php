@@ -4,6 +4,9 @@ use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterAuthController;
 use App\Http\Controllers\SessionController;
+use App\Mail\JobMail;
+
+
 
 Route::view('/', 'home');
 Route::view('/about', 'about');
